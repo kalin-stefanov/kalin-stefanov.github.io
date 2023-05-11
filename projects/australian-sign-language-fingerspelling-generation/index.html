@@ -62,7 +62,7 @@
     <script async type="text/json">{
       "title": "Australian Sign Language Fingerspelling Generation",
       "description": "<strong>Funder&#58;</strong> Telematics Trust<br/><strong>Period&#58;</strong> 2023 - 2024",
-      "published": "May 6, 2023",
+      "published": "May 12, 2023",
       "authors": [
         
       ],
@@ -184,6 +184,48 @@
 
 <h4 id="web-application">Web Application</h4>
 <p>The <a href="https://en.wikipedia.org/wiki/WebGL" rel="external nofollow noopener" target="_blank">WebGL</a> application will allow for the conversion of a text prompt into an animated, interactive 3D model fingerspelling the prompt. The application will be deployed on the <a href="https://auslan.org.au" rel="external nofollow noopener" target="_blank">Auslan Signbank</a>: Australia’s premiere Australian Sign Language website and dictionary.</p>
+
+<style>
+model-viewer {
+  width: 100%;
+  height: 400px;
+  background-color: #ffffff;
+  margin-top: 10px;
+}
+
+.center {
+  width:100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+</style>
+
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js">
+</script>
+
+<model-viewer id="handsModelViewer" src="../../assets/3d/a.gltf" touch-action="pan-y" camera-controls="" autoplay="">
+</model-viewer>
+
+<div class="center">
+<button id="playButton">Play</button> 
+<button id="pauseButton">Pause</button>
+</div>
+
+<script>
+const modelViewer = document.querySelector('#handsModelViewer');
+const playButton = document.querySelector('#playButton');
+const pauseButton = document.querySelector('#pauseButton');
+
+playButton.addEventListener('click', e => {
+    modelViewer.play();
+});
+
+pauseButton.addEventListener('click', e => {
+    //console.log(modelViewer.currentTime)
+    modelViewer.pause();
+});
+</script>
 
 <h4 id="smartphone-application">Smartphone Application</h4>
 <p>The <a href="https://en.wikipedia.org/wiki/IOS" rel="external nofollow noopener" target="_blank">iOS</a> application will allow for the conversion of a text prompt into an animated, interactive 3D model fingerspelling the prompt. The application will be deployed on the <a href="https://www.apple.com/app-store" rel="external nofollow noopener" target="_blank">Apple App Store</a>.</p>
