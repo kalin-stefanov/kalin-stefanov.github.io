@@ -62,7 +62,7 @@
     <script async type="text/json">{
       "title": "Australian Sign Language Fingerspelling Generation",
       "description": "<strong>Funder&#58;</strong> Telematics Trust<br/><strong>Period&#58;</strong> 2023 - 2024",
-      "published": "May 12, 2023",
+      "published": "May 15, 2023",
       "authors": [
         
       ],
@@ -191,40 +191,127 @@ model-viewer {
   height: 400px;
   background-color: #ffffff;
   margin-top: 10px;
+  box-shadow: 1px 1px 8px 1px #dcdcdc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  --progress-bar-color: #ffffff;
 }
 
-.center {
-  width:100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 10px;
+.search {
+  height: 48px;
+  width: 50%;
+  border-radius: 24px;
+  border: 1px solid #dcdcdc;
+  position: relative;
+}
+
+.search:hover {
+  box-shadow: 1px 1px 8px 1px #dcdcdc;
+}
+
+.search:focus-within {
+  box-shadow: 1px 1px 8px 1px #dcdcdc;
+  outline: none;
+}
+
+.search svg {
+  z-index: -1;
+  fill: #dcdcdc;
+  height: 24px;
+  width: 24px;
+  top: 12px;
+  bottom: 12px;
+  left: 12px;
+  position: absolute;
+}
+
+.search input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  font-size: 24px;
+  text-align: center;
+  font-weight: bold;
+  background: transparent;
+}
+
+.buttons {
+  margin-top: 10px;
+}
+
+.button {
+  background-color: #f5f5f5;
+  border: none;
+  color: #707070;
+  font-size: 14px;
+  padding: 5px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  outline: none;
+}
+
+.button:hover {
+  border: 1px solid #c8c8c8;
+  padding: 4px 19px;
+  color: #808080;
+}
+
+.button:focus {
+  border: 1px solid #c8c8c8;
+  padding: 4px 19px;
 }
 </style>
 
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js">
 </script>
 
-<model-viewer id="handsModelViewer" src="../../assets/3d/a.gltf" touch-action="pan-y" camera-controls="" autoplay="">
-</model-viewer>
-
-<div class="center">
-<button id="playButton">Play</button> 
-<button id="pauseButton">Pause</button>
+<center>
+<div class="search">
+    <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+        <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+    </svg>
+    <input maxlength="1" onkeydown="return((event.keyCode &gt;= 65 &amp;&amp; event.keyCode &lt;= 90) || event.keyCode == 8);" type="text" placeholder="Type and press enter" onfocus="this.placeholder=''" onblur="this.placeholder='Type and press enter'" autocomplete="off" spellcheck="false">
 </div>
 
+<div class="buttons">
+    <button class="button" id="playButton" type="button"><i class="fa fa-play"></i></button>
+    <button class="button" id="pauseButton" type="button"><i class="fa fa-pause"></i></button>
+    <button class="button" id="stopButton" type="button"><i class="fa fa-stop"></i></button>
+</div>
+</center>
+
+<model-viewer id="handsModelViewer" src="" touch-action="pan-y" loading="eager" camera-controls="" camera-target="0m auto 0m" camera-orbit="auto auto auto" field-of-view="25deg" disable-pan="" autoplay="">
+</model-viewer>
+
 <script>
-const modelViewer = document.querySelector('#handsModelViewer');
-const playButton = document.querySelector('#playButton');
-const pauseButton = document.querySelector('#pauseButton');
+    const modelViewer = document.querySelector('#handsModelViewer');
 
-playButton.addEventListener('click', e => {
-    modelViewer.play();
-});
+    const input = document.querySelector('input');
+    const playButton = document.querySelector('#playButton');
+    const pauseButton = document.querySelector('#pauseButton');
+    const stopButton = document.querySelector('#stopButton');
 
-pauseButton.addEventListener('click', e => {
-    //console.log(modelViewer.currentTime)
-    modelViewer.pause();
-});
+    playButton.addEventListener('click', (event) => {
+        modelViewer.play();
+    });
+
+    pauseButton.addEventListener('click', (event) => {
+        //console.log(modelViewer.currentTime);
+        modelViewer.pause();
+    });
+    
+    stopButton.addEventListener('click', (event) => {
+        modelViewer.setAttribute('src', `../../assets/3d/idle.gltf`);
+    });
+
+    input.addEventListener("keyup", (event) => {
+        if (event.keyCode === 13) {
+            input.blur();
+            const letter = document.querySelector('input');
+            modelViewer.setAttribute('src', `../../assets/3d/${letter.value.toLowerCase()}.gltf`);
+        }
+    });
 </script>
 
 <h4 id="smartphone-application">Smartphone Application</h4>
