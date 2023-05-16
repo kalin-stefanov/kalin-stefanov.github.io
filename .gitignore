@@ -1,4 +1,9 @@
-_site/
-.sass-cache/
-.jekyll-cache/
-.jekyll-metadata
+LICENSE
+README.md
+assets/img/app-mockup.ai
+assets/img/close-hand.ai
+assets/img/open-hand.ai
+assets/img/paper.ai
+assets/img/point-hand.ai
+assets/img/shaka-hand.ai
+assets/img/wave-hand.ai
