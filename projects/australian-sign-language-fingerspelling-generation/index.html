@@ -64,7 +64,7 @@
     <script async type="text/json">{
       "title": "Australian Sign Language Fingerspelling Generation",
       "description": "<strong>Funder&#58;</strong> Telematics Trust<br/><strong>Period&#58;</strong> 2023 - 2024",
-      "published": "May 16, 2023",
+      "published": "May 17, 2023",
       "authors": [
         
       ],
@@ -193,10 +193,11 @@ model-viewer {
   height: 400px;
   background-color: #ffffff;
   margin-top: 10px;
-  box-shadow: 1px 1px 8px 1px #dcdcdc;
+  outline: 1px solid black;
   border-radius: 5px;
   margin-bottom: 10px;
   --progress-bar-color: #ffffff;
+  position: relative;
 }
 
 .search {
@@ -238,16 +239,12 @@ model-viewer {
   background: transparent;
 }
 
-.buttons {
-  margin-top: 10px;
-}
-
 .button {
-  background-color: #f5f5f5;
-  border: none;
+  background: transparent;
+  border: 1px solid black;
   color: #707070;
   font-size: 14px;
-  padding: 5px 20px;
+  padding: 5px 15px;
   margin: 5px;
   border-radius: 5px;
   outline: none;
@@ -255,13 +252,41 @@ model-viewer {
 
 .button:hover {
   border: 1px solid #c8c8c8;
-  padding: 4px 19px;
-  color: #808080;
 }
 
 .button:focus {
   border: 1px solid #c8c8c8;
-  padding: 4px 19px;
+}
+
+.imageDiv {
+  width: 100%;
+  outline: 1px solid black;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.controlDiv {
+  background-color: black;
+  width: 100%;
+  height: 50px;
+  bottom: 0px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  position: absolute;
+}
+
+.captionDiv {
+  background-color: black;
+  width: 100%;
+  height: 25px;
+  bottom: 0px;
+  color: white;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  font-size: 0.750rem;
+  text-align: center;
+  position: absolute;
 }
 </style>
 
@@ -276,15 +301,14 @@ model-viewer {
     <input maxlength="1" onkeydown="return((event.keyCode &gt;= 65 &amp;&amp; event.keyCode &lt;= 90) || event.keyCode == 8);" type="text" placeholder="" onfocus="this.placeholder=''" onblur="this.placeholder=''" autocomplete="off" spellcheck="false">
 </div>
 
-<div class="buttons">
-    <button class="button" id="playButton" type="button"><i class="fa fa-play"></i></button>
-    <button class="button" id="pauseButton" type="button"><i class="fa fa-pause"></i></button>
-    <button class="button" id="stopButton" type="button"><i class="fa fa-stop"></i></button>
-</div>
-</center>
-
-<model-viewer id="handsModelViewer" src="" touch-action="pan-y" loading="eager" camera-controls="" camera-target="0m auto 0m" camera-orbit="auto auto auto" field-of-view="25deg" disable-pan="" autoplay="">
+<model-viewer id="handsModelViewer" src="../../assets/3d/idle.gltf" touch-action="pan-y" loading="eager" camera-controls="" camera-target="0m auto 0m" camera-orbit="auto auto auto" field-of-view="25deg" disable-pan="" autoplay="">
+    <div class="controlDiv">
+        <button class="button" id="playButton" type="button"><i class="fa fa-play"></i></button>
+        <button class="button" id="pauseButton" type="button"><i class="fa fa-pause"></i></button>
+        <button class="button" id="stopButton" type="button"><i class="fa fa-stop"></i></button>
+    </div>
 </model-viewer>
+</center>
 
 <script>
     const modelViewer = document.querySelector('#handsModelViewer');
@@ -318,9 +342,11 @@ model-viewer {
 
 <h4 id="smartphone-application">Smartphone Application</h4>
 <p>The <a href="https://en.wikipedia.org/wiki/IOS" rel="external nofollow noopener" target="_blank">iOS</a> application will allow for the conversion of a text prompt into an animated, interactive 3D model fingerspelling the prompt. The application will be deployed on the <a href="https://www.apple.com/app-store" rel="external nofollow noopener" target="_blank">Apple App Store</a>.</p>
-<div class="row justify-content-sm-center">
-    <div class="col-sm-9 mt-3 mt-md-0">
-        <figure>
+
+<div class="imageDiv">
+    <div class="row justify-content-sm-center">
+        <div class="col-sm-9 mt-3 mt-md-0">
+            <figure>
     <picture>
         
 
@@ -330,8 +356,9 @@ model-viewer {
 
 </figure>
 
-        <div class="caption">
-            Application mockup (image source: Andre Ky Pham).
+        </div>
+        <div class="captionDiv">
+            Application mockup (image source: Andre Ky Pham)
         </div>
     </div>
 </div>
