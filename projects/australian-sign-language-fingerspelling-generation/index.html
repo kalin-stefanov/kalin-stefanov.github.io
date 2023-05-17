@@ -189,14 +189,15 @@
 
 <style>
 model-viewer {
+  --progress-bar-color: #ffffff;
+  
   width: 100%;
   height: 400px;
   background-color: #ffffff;
   margin-top: 10px;
+  margin-bottom: 10px;
   outline: 1px solid black;
   border-radius: 5px;
-  margin-bottom: 10px;
-  --progress-bar-color: #ffffff;
   position: relative;
 }
 
@@ -214,17 +215,17 @@ model-viewer {
 
 .search:focus-within {
   box-shadow: 1px 1px 8px 1px #dcdcdc;
-  outline: none;
 }
 
 .search svg {
   z-index: -1;
-  fill: #dcdcdc;
+  
   height: 24px;
   width: 24px;
   top: 12px;
   bottom: 12px;
   left: 12px;
+  fill: #dcdcdc;
   position: absolute;
 }
 
@@ -234,19 +235,19 @@ model-viewer {
   outline: none;
   border: none;
   font-size: 24px;
-  text-align: center;
   font-weight: bold;
+  text-align: center;
   background: transparent;
 }
 
 .button {
-  background: transparent;
   border: 1px solid black;
+  border-radius: 5px;
   color: #707070;
+  background: transparent;
   font-size: 14px;
   padding: 5px 15px;
   margin: 5px;
-  border-radius: 5px;
   outline: none;
 }
 
@@ -266,6 +267,12 @@ model-viewer {
   position: relative;
 }
 
+img {
+  width: 75%;
+  margin-top: 25px;
+  margin-bottom: 50px;
+}
+
 .controlDiv {
   background-color: black;
   width: 100%;
@@ -281,9 +288,9 @@ model-viewer {
   width: 100%;
   height: 25px;
   bottom: 0px;
-  color: white;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+  color: white;
   font-size: 0.750rem;
   text-align: center;
   position: absolute;
@@ -343,25 +350,14 @@ model-viewer {
 <h4 id="smartphone-application">Smartphone Application</h4>
 <p>The <a href="https://en.wikipedia.org/wiki/IOS" rel="external nofollow noopener" target="_blank">iOS</a> application will allow for the conversion of a text prompt into an animated, interactive 3D model fingerspelling the prompt. The application will be deployed on the <a href="https://www.apple.com/app-store" rel="external nofollow noopener" target="_blank">Apple App Store</a>.</p>
 
+<center>
 <div class="imageDiv">
-    <div class="row justify-content-sm-center">
-        <div class="col-sm-9 mt-3 mt-md-0">
-            <figure>
-    <picture>
-        
-
-        <!-- Fallback to the original file -->
-        <img src="/assets/img/app-mockup.png" class="img-fluid" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
-  </picture>
-
-</figure>
-
-        </div>
-        <div class="captionDiv">
-            Application mockup (image source: Andre Ky Pham)
-        </div>
+    <img src="../../assets/img/app-mockup.png">
+    <div class="captionDiv">
+        Application mockup (image source: Andre Ky Pham)
     </div>
 </div>
+</center>
 
       </d-article>
 
