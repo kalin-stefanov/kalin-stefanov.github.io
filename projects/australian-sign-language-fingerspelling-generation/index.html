@@ -9,7 +9,8 @@
 
 <!-- Standard metadata -->
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Australian Sign Language Fingerspelling Generation | Kalin  Stefanov</title>
 <meta name="author" content="Kalin  Stefanov">
@@ -43,6 +44,18 @@
 <!-- Dark Mode -->
 
 
+<!-- Three.js -->
+<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@v0.152.2/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@v0.152.2/examples/jsm/"
+    }
+  }
+</script>
+
 
     <!-- jQuery -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -64,7 +77,7 @@
     <script async type="text/json">{
       "title": "Australian Sign Language Fingerspelling Generation",
       "description": "<strong>Funder&#58;</strong> Telematics Trust<br/><strong>Period&#58;</strong> 2023 - 2024",
-      "published": "May 17, 2023",
+      "published": "May 21, 2023",
       "authors": [
         
       ],
@@ -146,6 +159,7 @@
             <div><a href="#aims">Aims</a></div>
             <div><a href="#investigators">Investigators</a></div>
             <div><a href="#steering-committee">Steering Committee</a></div>
+            <div><a href="#contributors">Contributors</a></div>
             <div><a href="#outcomes">Outcomes</a></div>
             <ul>
               <li><a href="#dataset">Dataset</a></li>
@@ -180,18 +194,22 @@
   <li>Paula Thornton (<a href="https://deafaustralia.org.au" rel="external nofollow noopener" target="_blank">Deaf Australia</a>)</li>
 </ul>
 
+<h3 id="contributors">Contributors</h3>
+<ul>
+  <li>Michael Neylan</li>
+  <li>Andre Ky Pham</li>
+</ul>
+
 <h3 id="outcomes">Outcomes</h3>
 <h4 id="dataset">Dataset</h4>
 <p>We are in process of recording the first dataset of high-quality motion-captured 3D Australian Sign Language fingerspelling. The participants (including both left- and right-handed) fingerspell a specifically designed word list<d-footnote><a href="http://homepages.math.uic.edu/~leon/mcs425-s08/handouts/char_freq2.pdf" rel="external nofollow noopener" target="_blank">Frequency of character pairs in English language</a></d-footnote><d-footnote><a href="https://englishstudyonline.org/affixes/" rel="external nofollow noopener" target="_blank">List of common affixes in English language</a></d-footnote> at a natural pace in our motion capture studio. The data is recorded through a <a href="https://www.vicon.com" rel="external nofollow noopener" target="_blank">Vicon</a> motion capture system and a pair of <a href="https://www.manus-meta.com/products/optitrack-gloves" rel="external nofollow noopener" target="_blank">Manus OptiTrack Gloves</a>.</p>
 
 <h4 id="web-application">Web Application</h4>
-<p>The <a href="https://en.wikipedia.org/wiki/WebGL" rel="external nofollow noopener" target="_blank">WebGL</a> application will allow for the conversion of a text prompt into an animated, interactive 3D model fingerspelling the prompt. The application will be deployed on the <a href="https://auslan.org.au" rel="external nofollow noopener" target="_blank">Auslan Signbank</a>: Australia’s premiere Australian Sign Language website and dictionary.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/WebGL" rel="external nofollow noopener" target="_blank">WebGL</a> application will allow for the conversion of a text prompt into an animated, interactive 3D model fingerspelling the prompt. The application will be deployed on the <a href="https://auslan.org.au" rel="external nofollow noopener" target="_blank">Auslan Signbank</a>: Australia’s premiere Australian Sign Language website and dictionary. Below is a prototype of the application. Type a word in the search box and press <kbd>↵ Return</kbd> to convert into 3D fingerspelling (use <i class="fa fa-mouse"></i> to zoom, pan and rotate).</p>
 
 <style>
-model-viewer {
-  --progress-bar-color: #ffffff;
-  
-  width: 100%;
+.modelViewer {
+  width: 500px;
   height: 400px;
   background-color: #ffffff;
   margin-top: 10px;
@@ -260,7 +278,7 @@ model-viewer {
 }
 
 .imageDiv {
-  width: 100%;
+  width: 500px;
   outline: 1px solid black;
   border-radius: 5px;
   margin-bottom: 10px;
@@ -297,55 +315,24 @@ img {
 }
 </style>
 
-<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js">
-</script>
+<script type="module" src="/assets/js/fingerspelling_generator.js"></script>
 
 <center>
 <div class="search">
     <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
         <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
     </svg>
-    <input maxlength="1" onkeydown="return((event.keyCode &gt;= 65 &amp;&amp; event.keyCode &lt;= 90) || event.keyCode == 8);" type="text" placeholder="" onfocus="this.placeholder=''" onblur="this.placeholder=''" autocomplete="off" spellcheck="false">
+    <input id="searchBox" onkeydown="return((event.keyCode &gt;= 65 &amp;&amp; event.keyCode &lt;= 90) || event.keyCode == 8);" type="text" placeholder="" onfocus="this.placeholder=''" onblur="this.placeholder=''" autocomplete="off" spellcheck="false">
 </div>
 
-<model-viewer id="handsModelViewer" src="../../assets/3d/idle.gltf" touch-action="pan-y" loading="eager" camera-controls="" camera-target="0m auto 0m" camera-orbit="auto auto auto" field-of-view="25deg" disable-pan="" autoplay="">
-    <div class="controlDiv">
+<div class="modelViewer" id="fingerspellingGenerator">
+<!--    <div class="controlDiv">
         <button class="button" id="playButton" type="button"><i class="fa fa-play"></i></button>
         <button class="button" id="pauseButton" type="button"><i class="fa fa-pause"></i></button>
         <button class="button" id="stopButton" type="button"><i class="fa fa-stop"></i></button>
-    </div>
-</model-viewer>
+    </div> -->
+</div>
 </center>
-
-<script>
-    const modelViewer = document.querySelector('#handsModelViewer');
-
-    const input = document.querySelector('input');
-    const playButton = document.querySelector('#playButton');
-    const pauseButton = document.querySelector('#pauseButton');
-    const stopButton = document.querySelector('#stopButton');
-
-    playButton.addEventListener('click', (event) => {
-        modelViewer.play();
-    });
-
-    pauseButton.addEventListener('click', (event) => {
-        //console.log(modelViewer.currentTime);
-        modelViewer.pause();
-    });
-    
-    stopButton.addEventListener('click', (event) => {
-        modelViewer.setAttribute('src', `../../assets/3d/idle.gltf`);
-    });
-
-    input.addEventListener("keyup", (event) => {
-        if (event.keyCode === 13) {
-            input.blur();
-            const letter = document.querySelector('input');
-            modelViewer.setAttribute('src', `../../assets/3d/${letter.value.toLowerCase()}.gltf`);
-        }
-    });
-</script>
 
 <h4 id="smartphone-application">Smartphone Application</h4>
 <p>The <a href="https://en.wikipedia.org/wiki/IOS" rel="external nofollow noopener" target="_blank">iOS</a> application will allow for the conversion of a text prompt into an animated, interactive 3D model fingerspelling the prompt. The application will be deployed on the <a href="https://www.apple.com/app-store" rel="external nofollow noopener" target="_blank">Apple App Store</a>.</p>
