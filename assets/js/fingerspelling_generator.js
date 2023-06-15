@@ -2,6 +2,7 @@ import * as THREE from 'three';
 
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
 let container,
     searchBox,
@@ -11,7 +12,6 @@ let container,
     currentAction,
     currentActionIndex,
     previousAction,
-    axesHelper,
     skeletonHelper,
     states,
     camera,
@@ -25,7 +25,10 @@ let container,
     loader,
     model,
     animations,
-    prompt;
+    prompt,
+    gui,
+    rhController,
+    lhController;
 
 init();
 animate();
@@ -34,12 +37,12 @@ function init() {
     container = document.getElementById( 'fingerspellingGenerator' );
 
     searchBox = document.getElementById( 'searchBox' );
-    searchBox.addEventListener( 'keydown', onSearch )
+    searchBox.addEventListener( 'keydown', onSearch );
 
     clock = new THREE.Clock();
 
     // camera
-    camera = new THREE.PerspectiveCamera( 30, 500 / 400, 0.25, 100 );
+    camera = new THREE.PerspectiveCamera( 30, container.offsetWidth / 400, 0.25, 100 );
     camera.position.set( 0.0, 2.0, 2.0 );
     camera.lookAt( 0, 0, 0 );
 
@@ -47,10 +50,6 @@ function init() {
     scene = new THREE.Scene();
     scene.background = new THREE.Color( 0xe0e0e0 );
     scene.fog = new THREE.Fog( 0xe0e0e0, 20, 100 );
-
-    //scene.add( new THREE.ArrowHelper( new THREE.Vector3( 1, 0, 0 ), new THREE.Vector3( 0, 0, 0 ), 1, 0x7F2020, 0.2, 0.1 ) );
-    //scene.add( new THREE.ArrowHelper( new THREE.Vector3( 0, 1, 0 ), new THREE.Vector3( 0, 0, 0 ), 1, 0x207F20, 0.2, 0.1 ) );
-    //scene.add( new THREE.ArrowHelper( new THREE.Vector3( 0, 0, 1 ), new THREE.Vector3( 0, 0, 0 ), 1, 0x20207F, 0.2, 0.1 ) );
 
     // lights
     hemiLight = new THREE.HemisphereLight( 0xffffff, 0x444444 );
@@ -71,14 +70,45 @@ function init() {
     groundGrid.material.transparent = true;
     scene.add( groundGrid );
     
+    // GUI
+    createGUI();
+    
     // model
+    loadModel( '../../assets/3d/right-handed.glb' );
+
+    // renderer
+    renderer = new THREE.WebGLRenderer( { antialias: true } );
+    renderer.setPixelRatio( window.devicePixelRatio );
+    renderer.setSize( container.offsetWidth, 400 );
+    container.appendChild( renderer.domElement );
+    
+    // controls
+    controls = new OrbitControls( camera, renderer.domElement );
+    controls.zoomSpeed = 0.1;
+    controls.target = new THREE.Vector3( 0.0, 1.5, 0.0 );
+    controls.update();
+
+    window.addEventListener( 'resize', onWindowResize );
+}
+
+function createGUI() {
+    gui = new GUI( { width: 100, autoPlace: false } );
+    const customContainer = $('.moveGUI').append($(gui.domElement));
+
+    rhController = gui.add( { 'right-handed': true }, 'right-handed' ).onChange( changeRightHanded );
+    lhController = gui.add( { 'left-handed': false }, 'left-handed' ).onChange( changeLeftHanded );
+    
+    gui.close();
+}
+
+function loadModel(modelPath) {
     loader = new GLTFLoader();
-    loader.load( '../../assets/3d/alphabet.glb', function ( gltf ) {
+    loader.load( modelPath, function ( gltf ) {
         model = gltf.scene;
         scene.add( model );
-
+        
         animations = gltf.animations;
-
+        
         skeletonHelper = new THREE.SkeletonHelper( model );
         skeletonHelper.material = new THREE.LineBasicMaterial( {
             color: 0x000000,
@@ -97,20 +127,6 @@ function init() {
     function ( e ) {
         console.error( e );
     } );
-
-    // renderer
-    renderer = new THREE.WebGLRenderer( { antialias: true } );
-    renderer.setPixelRatio( window.devicePixelRatio );
-    renderer.setSize( 500, 400 );
-    container.appendChild( renderer.domElement );
-
-    // controls
-    controls = new OrbitControls( camera, renderer.domElement );
-    controls.zoomSpeed = 0.1;
-    controls.target = new THREE.Vector3( 0.0, 1.5, 0.0 );
-    controls.update();
-
-    window.addEventListener( 'resize', onWindowResize );
 }
 
 function createAnimations() {
@@ -156,13 +172,6 @@ function playNextAction() {
     currentActionIndex++;
 }
 
-function onWindowResize() {
-    camera.aspect = 500 / 400;
-    camera.updateProjectionMatrix();
-
-    renderer.setSize( 500, 400 );
-}
-
 function onSearch() {
     if (event.keyCode === 13) {
         searchBox.blur();
@@ -182,6 +191,47 @@ function onSearch() {
     }
 }
 
+function changeRightHanded( status ) {
+    if (status == false) {
+        rhController.object = { 'right-handed': true }
+        rhController.updateDisplay();
+    }
+    else {
+        rhController.object = { 'right-handed': true }
+        rhController.updateDisplay();
+        lhController.object = { 'left-handed': false }
+        lhController.updateDisplay();
+        
+        model.removeFromParent();
+        skeletonHelper.removeFromParent();
+        loadModel( '../../assets/3d/right-handed.glb' );
+    }
+}
+
+function changeLeftHanded( status ) {
+    if (status == false) {
+        lhController.object = { 'left-handed': true }
+        lhController.updateDisplay();
+    }
+    else {
+        lhController.object = { 'left-handed': true }
+        lhController.updateDisplay();
+        rhController.object = { 'right-handed': false }
+        rhController.updateDisplay();
+        
+        model.removeFromParent();
+        skeletonHelper.removeFromParent();
+        loadModel( '../../assets/3d/left-handed.glb' );
+    }
+}
+
+function onWindowResize() {
+    camera.aspect = container.offsetWidth / 400;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( container.offsetWidth, 400 );
+}
+
 function animate() {
     const dt = clock.getDelta();
 
@@ -190,19 +240,3 @@ function animate() {
     requestAnimationFrame( animate );
     renderer.render( scene, camera );
 }
-
-//const playButton = document.querySelector('#playButton');
-//const pauseButton = document.querySelector('#pauseButton');
-//const stopButton = document.querySelector('#stopButton');
-            
-//playButton.addEventListener('click', (event) => {
-//    modelViewer.play();
-//});
-
-//pauseButton.addEventListener('click', (event) => {
-//    modelViewer.pause();
-//});
-
-//stopButton.addEventListener('click', (event) => {
-//    modelViewer.animationName = 'idle';
-//});
